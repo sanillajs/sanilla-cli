@@ -4,8 +4,11 @@ import webpack from 'webpack';
 import merge from 'webpack-merge';
 import def from '../webpack.config.js';
 import * as path from 'path';
+import watch from 'node-watch';
 
 import { copy } from './utils';
+import express from 'express';
+import { Application } from 'express';
 
 /*
  * Command List
@@ -18,11 +21,24 @@ class SanillaTS {
 	}
 
 	private dev(args: string[]) {
-		/* empty */
+		const srcPath = path.join(this.contextPath, 'src');
+		const distPath = path.resolve(this.contextPath, 'dist');
+
+		const app: Application = express();
+		app.use(express.static(distPath));
+
+		const server = app.listen(8088, () => {
+			console.log('8088 port listen');
+		});
+
+		const watcher = watch(srcPath, { recursive: true }, (eventType: string, filename: string|Buffer) => {
+			watcher.close();
+			server.close();
+			this.build(args);
+		});
 	}
 
 	private build(args: string[]) {
-		/* empty */
 		const compiler = webpack(def);
 		compiler.run((err, stats) => {
 			if ( err ) {
