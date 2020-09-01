@@ -45,26 +45,6 @@ class SanillaTS {
 				console.log(err);
 				return;
 			}
-
-			const srcPath = def.output.path.replace(this.contextPath + '/dist', '');
-			const mainSrc = path.join(srcPath, def.output.filename);
-
-			copy(
-				path.resolve(this.contextPath, 'public'),
-				path.resolve(this.contextPath, 'dist'),
-				{
-					'.html': [
-						(src: string, buf: Buffer) => {
-							let utf8str = buf.toString('utf8');
-							utf8str = utf8str.replace(/{{\s*main\s*}}/gim, mainSrc); 
-							return Buffer.from(utf8str, 'utf8');
-						},
-					],
-					'option': {
-						'ignore-dot': true,
-					},
-				}
-			);
 		});
 	}
 

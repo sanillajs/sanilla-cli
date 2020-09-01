@@ -1,11 +1,20 @@
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const progressPath = (process.env.SANILLA_CONTEXT_PATH || process.cwd());
+
 module.exports = {
 	'entry': './src/index.ts',
 	'mode': 'development',
 	'target': 'node',
 	'output': {
-		'path': (process.env.SANILLA_CONTEXT_PATH || process.cwd()) + '/dist/src',
+		'path': progressPath + '/dist',
 		'filename': 'index.js',
 	},
+	'plugins': [
+		new HtmlWebpackPlugin({
+			template: path.join(progressPath, 'public/index.html'),
+		}),
+	],
 	'module': {
 		'rules': [
 			{
@@ -15,7 +24,11 @@ module.exports = {
 			},
 			{
 				'test': /\.html$/i,
-				'loader': 'html-loader',
+				'use': [
+					{
+						'loader': 'html-loader',
+					},
+				],
 			},
 			{
 				'test': /\.css$/i,
