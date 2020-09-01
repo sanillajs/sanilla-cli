@@ -1,26 +1,25 @@
-const path = require('path');
-const { NODE_ENV = "production" } = process.env;
-
 module.exports = {
-	"entry": "./src/index.ts",
-	"mode": NODE_ENV,
-	"target": "node",
-	"output": {
-		"path": path.resolve(__dirname, "dist"),
-		"filename": "[name].js",
+	'entry': './src/index.ts',
+	'mode': 'development',
+	'target': 'node',
+	'output': {
+		'path': (process.env.SANILLA_CONTEXT_PATH || process.cwd()) + '/dist/src',
+		'filename': 'index.js',
 	},
-	"resolve": {
-		"alias": {
-			"@": path.resolve(__dirname, "src"),
-		},
-		"extensions": [".ts", ".js", ".json"],
-	},
-	"module": {
-		"rules": [
+	'module': {
+		'rules': [
 			{
-				"test": /\.ts$/,
-				"loader": "ts-loader",
-				"exclude": /node-modules/,
+				'test': /\.ts$/,
+				'loader': 'ts-loader',
+				'exclude': /node_modules/,
+			},
+			{
+				'test': /\.html$/i,
+				'loader': 'html-loader',
+			},
+			{
+				'test': /\.css$/i,
+				'use': ['style-loader', 'css-loader'],
 			},
 		],
 	},
