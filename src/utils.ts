@@ -49,3 +49,40 @@ export const copy = (src: string, dist: string, plugin: any = {}, fp?: string) =
 		}
 	}
 };
+
+export enum ArgsType {
+
+	HAS = 1,
+	VAL = 2,
+
+}
+
+export interface ArgsDictionary {
+	[key: string]: (string|boolean|string[]);
+	remainder: string[];
+}
+
+export const parseArgs = (args: string[]) => {
+	const argv: ArgsDictionary = { remainder: [] };
+	const len = args.length;
+
+	let i = 0;
+	for (i=0;i < len;i++) {
+		const key = args[i].replace(/^-*/, '').split('=')[0];
+
+		if ( args[i][0] === '-' ) {
+			if ( args[i][1] && args[i][1] === '-' ) {
+				// --[option]
+
+				argv[key] = args[i].replace('--' + key + '=', '');
+			} else {
+				// -[options]
+				argv[key] = true;
+			}
+		} else {
+			argv.remainder.push(args[i]);
+		}
+	}
+
+	return argv;
+};

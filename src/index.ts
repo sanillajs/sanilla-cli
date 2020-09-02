@@ -7,13 +7,14 @@ import * as path from 'path';
 import watch from 'node-watch';
 
 import { copy } from './utils';
-import express from 'express';
-import { Application } from 'express';
+import init from './init';
+
 
 /*
  * Command List
  * :dev
  * :build
+ * :init
  */
 
 class SanillaTS {
@@ -21,21 +22,7 @@ class SanillaTS {
 	}
 
 	private dev(args: string[]) {
-		const srcPath = path.join(this.contextPath, 'src');
-		const distPath = path.resolve(this.contextPath, 'dist');
-
-		const app: Application = express();
-		app.use(express.static(distPath));
-
-		const server = app.listen(8088, () => {
-			console.log('8088 port listen');
-		});
-
-		const watcher = watch(srcPath, { recursive: true }, (eventType: string, filename: string|Buffer) => {
-			watcher.close();
-			server.close();
-			this.build(args);
-		});
+		/* empty */
 	}
 
 	private build(args: string[]) {
@@ -46,6 +33,10 @@ class SanillaTS {
 				return;
 			}
 		});
+	}
+
+	private init(args: string[]) {
+		init(args);
 	}
 
 	public run(command: string, args: string[]) {
@@ -61,7 +52,7 @@ class SanillaTS {
 const sanilla = new SanillaTS(process.env.SANILLA_CONTEXT_PATH || process.cwd());
 
 const rawArgs = process.argv.slice(2);
-const cmd = rawArgs.pop() as string;
+const cmd = rawArgs.shift() as string;
 
 if ( cmd ) {
 	sanilla.run(cmd, rawArgs);
