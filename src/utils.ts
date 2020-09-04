@@ -7,6 +7,48 @@
 import fs from 'fs';
 import path from 'path';
 
+export const fullStringify = (obj: any, deep: number = 0) => {
+	let rtn = '';
+	const indent = '\t'.repeat(deep);
+	if ( Array.isArray(obj) ) {
+		rtn += '[\n';
+		for ( const val of obj ) {
+			rtn += indent + '\t' + fullStringify(val, deep + 1) + ',\n';
+		}
+		rtn += indent + ']';
+	} else if ( obj && typeof obj === 'object' && Object.keys(obj).length > 0 ) {
+		rtn += '{\n';
+		for ( const [key, val] of Object.entries(obj) ) {
+			rtn += indent + '\t' + `"${key}": ${fullStringify(val, deep + 1)},\n`;
+		}
+		rtn += indent + '}';
+	} else {
+		switch ( typeof obj ) {
+			case 'object':
+				if ( obj === null ) {
+					rtn += 'null';
+				} else {
+					rtn += obj.toString();
+				}
+				break;
+			case 'undefined':
+				rtn += 'undefined';
+				break;
+			case 'string':
+				rtn += `"${obj.replace(/\\/g, '\\\\')
+								.replace(/\n/g, '\\n')
+								.replace(/\t/g, '\\t')
+								.replace(/\r/g, '\\r')}"`;
+				break;
+			default:
+				rtn += obj.toString();
+		}
+	}
+
+	return rtn;
+}
+
+
 export const copy = (src: string, dist: string, plugin: any = {}, fp?: string) => {
 	if ( !fp ) {
 		fp = src;

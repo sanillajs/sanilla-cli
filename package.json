@@ -16,6 +16,7 @@
 		"express": "^4.17.1",
 		"file-loader": "^6.1.0",
 		"html-loader": "^1.3.0",
+		"inquirer": "^7.3.3",
 		"node-watch": "^0.6.4",
 		"nodemon": "^2.0.4",
 		"style-loader": "^1.2.1",
