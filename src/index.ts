@@ -2,7 +2,7 @@
 
 import webpack from 'webpack';
 import merge from 'webpack-merge';
-import def from '../webpack.config.js';
+//import def from '../webpack.config.js';
 import * as path from 'path';
 import watch from 'node-watch';
 
@@ -26,6 +26,7 @@ class SanillaTS {
 	}
 
 	private build(args: string[]) {
+		/*
 		const compiler = webpack(def);
 		compiler.run((err, stats) => {
 			if ( err ) {
@@ -33,10 +34,12 @@ class SanillaTS {
 				return;
 			}
 		});
+		*/
 	}
 
 	private init(args: string[]) {
-		init(args);
+		const initer = new init(args);
+		initer.run();
 	}
 
 	public run(command: string, args: string[]) {

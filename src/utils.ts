@@ -12,14 +12,30 @@ export const fullStringify = (obj: any, deep: number = 0) => {
 	const indent = '\t'.repeat(deep);
 	if ( Array.isArray(obj) ) {
 		rtn += '[\n';
-		for ( const val of obj ) {
-			rtn += indent + '\t' + fullStringify(val, deep + 1) + ',\n';
+		const len = obj.length;
+		for ( let i=0;i < len; i++ ) {
+			const val = obj[i];
+			let comma = '';
+			if ( i < len - 1 ) {
+				comma = ',';
+			}
+
+			rtn += indent + '\t' + fullStringify(val, deep + 1) + `${comma}\n`;
 		}
 		rtn += indent + ']';
 	} else if ( obj && typeof obj === 'object' && Object.keys(obj).length > 0 ) {
 		rtn += '{\n';
-		for ( const [key, val] of Object.entries(obj) ) {
-			rtn += indent + '\t' + `"${key}": ${fullStringify(val, deep + 1)},\n`;
+		const keys = Object.keys(obj);
+		const len = keys.length;
+		for ( let i=0;i < len;i ++ ) {
+			const key = keys[i];
+			const val = obj[key];
+			let comma = '';
+			if ( i < len - 1 ) {
+				comma = ',';
+			}
+
+			rtn += indent + '\t' + `"${key}": ${fullStringify(val, deep + 1)}${comma}\n`;
 		}
 		rtn += indent + '}';
 	} else {
