@@ -69,7 +69,7 @@ export const fullStringify = (obj: any, deep: number = 0) => {
 	}
 
 	return rtn;
-}
+};
 
 
 export const copy = (src: string, dist: string, plugin: any = {}, fp?: string) => {

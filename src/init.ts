@@ -143,17 +143,19 @@ Sanilla.append('#root', app);`,
 	}
 
 	private async typescript() {
+		/* tslint:disable:no-string-literal */
 		this.targets.package.contents.dependencies['typescript'] = '^4.0.2';
-		this.targets.package.contents.dependencies['ts-loader'] = '^8.0.3';
 		this.targets.package.contents.dependencies['@types/node'] = '^14.6.4';
+		this.targets.package.contents.dependencies['ts-loader'] = '^8.0.3';
+		/* tslint:enable:no-string-literal */
 
 		this.targets.webpack.contents.resolve.extensions.push('.ts');
 		this.targets.webpack.contents.entry = './src/index.ts';
 		this.targets.src.contents.index.name = 'index.ts';
 		this.targets.webpack.contents.module.rules.push({
-			"test": /\.ts$/,
-			"loader": "ts-loader",
-			"exclude": /node-modules/,
+			test: /\.ts$/,
+			loader: 'ts-loader',
+			exclude: /node-modules/,
 		});
 		this.lang = 'ts';
 
@@ -161,52 +163,52 @@ Sanilla.append('#root', app);`,
 			name: 'tsconfig.json',
 			type: TargetType.FILE,
 			contents: {
-				"compilerOptions": {
-					"target": "es6",
-					"module": "commonjs",
-					"sourceMap": true,
-					"outDir": "dist",
-					"strict": true,
-					"noImplicitAny": false,
-					"strictNullChecks": true,
-					"moduleResolution": "node",
-					"baseUrl": "./",
-					"typeRoots": ["node_modules/@types", "src/types"],
-					"allowSyntheticDefaultImports": true,
-					"esModuleInterop": true,
-					"skipLibCheck": true,
-					"forceConsistentCasingInFileNames": true,
+				compilerOptions: {
+					target: 'es6',
+					module: 'commonjs',
+					sourceMap: true,
+					outDir: 'dist',
+					strict: true,
+					noImplicitAny: false,
+					strictNullChecks: true,
+					moduleResolution: 'node',
+					baseUrl: './',
+					typeRoots: ['node_modules/@types', 'src/types'],
+					allowSyntheticDefaultImports: true,
+					esModuleInterop: true,
+					skipLibCheck: true,
+					forceConsistentCasingInFileNames: true,
 				},
-				"include": ["src/**/*"],
-				"exclude": ["node_modules"],
+				include: ['src/**/*'],
+				exclude: ['node_modules'],
 			},
 		};
 		this.targets.tslint = {
 			name: 'tslint.json',
 			type: TargetType.FILE,
 			contents: {
-				"defaultSeverity": "error",
-				"extends": [
-					"tslint:recommended"
+				defaultSeverity: 'error',
+				extends: [
+					'tslint:recommended'
 				],
-				"jsRules": {},
-				"rules": {
-					"indent": [true, "tabs", 4],
-					"interface-name": false,
-					"no-consecutive-blank-lines": false,
-					"object-literal-sort-keys": false,
-					"ordered-imports": false,
-					"quotemark": [true, "single"],
-					"comment-format": {
-						"severity": "warning"
+				jsRules: {},
+				rules: {
+					'indent': [true, 'tabs', 4],
+					'interface-name': false,
+					'no-consecutive-blank-lines': false,
+					'object-literal-sort-keys': false,
+					'ordered-imports': false,
+					'quotemark': [true, 'single'],
+					'comment-format': {
+						severity: 'warning'
 					},
-					"no-console": false,
-					"only-arrow-functions": false,
-					"one-variable-per-declaration": false,
-					"object-literal-shorthand": [true, {"method": "always"}],
-					"semicolon": true
+					'no-console': false,
+					'only-arrow-functions': false,
+					'one-variable-per-declaration': false,
+					'object-literal-shorthand': [true, {'method': 'always'}],
+					'semicolon': true
 				},
-				"rulesDirectory": []
+				rulesDirectory: []
 			},
 		};
 		this.targets.src.contents.types = {
@@ -228,7 +230,7 @@ Sanilla.append('#root', app);`,
 	private async router() {
 		this.targets.package.contents.dependencies['@sanillajs/sanilla-router'] = '^1.0.2';
 		this.targets.webpack.contents.devServer.historyApiFallback = true;
-		this.targets.src.contents.index.contents += `\n\nimport './router';`
+		this.targets.src.contents.index.contents += `\n\nimport './router';`;
 		this.targets.src.contents.app.contents = `<ul>
 	<li>
 		<a href="" id="home">Home</a>
@@ -357,11 +359,13 @@ Sanilla.router = new SanillaRouter('#router', {
 			],
 		});
 
+		/* tslint:disable:no-string-literal */
 		for ( const feature of answer['features'] ) {
 			if ( typeof this[feature] === 'function' ) {
 				this[feature]();
 			}
 		}
+		/* tslint:enable:no-string-literal */
 
 		this.build(this.targets, path.join(process.cwd(), this.name));
 	}
