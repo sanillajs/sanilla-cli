@@ -1,6 +1,6 @@
 {
 	"name": "@sanillajs/sanilla-cli",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"author": "sanilla",
 	"license": "MIT",
 	"main": "dist/index.js",
