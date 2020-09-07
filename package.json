@@ -1,16 +1,21 @@
 {
 	"name": "@sanillajs/sanilla-cli",
 	"version": "1.0.0",
-	"author": "tree-some",
+	"author": "sanilla",
 	"license": "MIT",
+	"main": "dist/index.js",
 	"bin": {
 		"sanilla-cli": "dist/index.js"
 	},
 	"scripts": {
-		"dev": "nodemon --watch src --watch package.json --watch tsconfig.js --delay 1 --exec 'npm run lint && ts-node' src/index.ts",
 		"lint": "tslint -p .",
 		"build": "tsc --build tsconfig.json"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sanillajs/sanilla-cli.git"
+	},
+	"keywords": [ "spa", "sanilla", "javascript", "js", "html", "framework", "single page application", "cli" ],
 	"dependencies": {
 		"css-loader": "^4.2.2",
 		"express": "^4.17.1",
@@ -29,6 +34,6 @@
 		"webpack-dev-server": "^3.11.0"
 	},
 	"devDependencies": {
-		"@types/node": "^14.0.13",
+		"@types/node": "^14.0.13"
 	}
 }
