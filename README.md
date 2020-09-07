@@ -1,8 +1,27 @@
-# typescript-template
+# Sanill-Cli
+
+## Install
+```sh
+npm install -g @sanillajs/sanilla-cli
+```
+
+or
 
 ```sh
-npx degit tree-some/typescript-template ts-project
-cd ts-project
+yarn global add @sanillajs/sanilla-cli
+```
+
+## Usage
+
+Create project
+```
+sanilla-cli init my-project
+cd my-project
 npm install
 npm run dev
+```
+
+Product build
+```
+npm run build
 ```
