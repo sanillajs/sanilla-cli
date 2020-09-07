@@ -2,13 +2,11 @@
 
 import webpack from 'webpack';
 import merge from 'webpack-merge';
-//import def from '../webpack.config.js';
-import * as path from 'path';
-import watch from 'node-watch';
+import path from 'path';
+import fs from 'fs';
 
-import { copy } from './utils';
+import { copy, ArgsDictionary, parseArgs } from './utils';
 import init from './init';
-
 
 /*
  * Command List
@@ -21,12 +19,14 @@ class SanillaTS {
 	constructor(public contextPath: string) {
 	}
 
-	private dev(args: string[]) {
-		/* empty */
-	}
-
 	private build(args: string[]) {
-		/*
+		const config = process.cwd() + '/webpack.config.js';
+
+		if ( !fs.existsSync(config) ) {
+			throw Error('Dose not exists webpack config file');
+		}
+
+		const def = require(config);
 		const compiler = webpack(def);
 		compiler.run((err, stats) => {
 			if ( err ) {
@@ -34,7 +34,6 @@ class SanillaTS {
 				return;
 			}
 		});
-		*/
 	}
 
 	private init(args: string[]) {

@@ -1,10 +1,10 @@
 {
-	"name": "SanillaTS",
+	"name": "@sanillajs/sanilla-cli",
 	"version": "1.0.0",
 	"author": "tree-some",
 	"license": "MIT",
 	"bin": {
-		"sanilla-ts": "dist/index.js"
+		"sanilla-cli": "dist/index.js"
 	},
 	"scripts": {
 		"dev": "nodemon --watch src --watch package.json --watch tsconfig.js --delay 1 --exec 'npm run lint && ts-node' src/index.ts",
@@ -19,16 +19,16 @@
 		"inquirer": "^7.3.3",
 		"node-watch": "^0.6.4",
 		"nodemon": "^2.0.4",
-		"style-loader": "^1.2.1",
 		"ts-loader": "^7.0.5",
 		"ts-node": "^8.10.2",
 		"tslint": "^6.1.3",
 		"typescript": "^3.9.5",
 		"webpack": "^4.43.0",
-		"webpack-merge": "^5.1.3"
+		"webpack-merge": "^5.1.3",
+		"html-webpack-plugin": "^4.4.1",
+		"webpack-dev-server": "^3.11.0"
 	},
 	"devDependencies": {
 		"@types/node": "^14.0.13",
-		"html-webpack-plugin": "^4.4.1"
 	}
 }

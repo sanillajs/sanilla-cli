@@ -28,7 +28,15 @@ export default class {
 			type: TargetType.FILE,
 			prefix: 'module.exports = ',
 			contents: {
-				rules: [],
+				mode: 'development',
+				module: {
+					rules: [
+						{
+							test: /\.html$/,
+							loader: 'html-loader',
+						},
+					],
+				},
 				devServer: {
 					host: '0.0.0.0',
 				},
@@ -52,17 +60,17 @@ export default class {
 				version: '1.0.0',
 				license: 'MIT',
 				scripts: {
-					start: 'sanilla-cli start',
+					dev: 'webpack-dev-server',
 					build: 'sanilla-cli build',
 				},
-				dependencies: [
-					'@sanillajs/sanilla',
-					'@sanillajs/sanilla-cli',
-					'html-loader',
-					'webpack',
-					'webpack-cli',
-					'webpack-dev-server',
-				],
+				dependencies: {
+					'@sanillajs/sanilla': '^1.0.3',
+					//'@sanillajs/sanilla-cli': '^1.0.0',
+					'html-loader': '^1.3.0',
+					'webpack': '^4.44.1',
+					'webpack-cli': '^3.3.12',
+					'webpack-dev-server': '^3.11.0',
+				},
 			},
 		},
 		public: {
@@ -117,12 +125,12 @@ Sanilla.append('#root', app);`,
 	}
 
 	private async babel() {
-		this.targets.package.contents.dependencies.push('babel-loader');
-		this.targets.package.contents.dependencies.push('@babel/core');
+		this.targets.package.contents.dependencies['babel-loader'] = '^8.1.0';
+		this.targets.package.contents.dependencies['@babel/core'] = '^7.11.6';
 
-		this.targets.webpack.contents.rules.push({
+		this.targets.webpack.contents.module.rules.push({
 			test: /\.js$/,
-			exclude: 'node_modules',
+			exclude: /node_modules/,
 			use: {
 				loader: 'babel-loader',
 				options: {
@@ -135,13 +143,18 @@ Sanilla.append('#root', app);`,
 	}
 
 	private async typescript() {
-		this.targets.package.contents.dependencies.push('typescript');
-		this.targets.package.contents.dependencies.push('ts-loader');
-		this.targets.package.contents.dependencies.push('@types/node');
+		this.targets.package.contents.dependencies['typescript'] = '^4.0.2';
+		this.targets.package.contents.dependencies['ts-loader'] = '^8.0.3';
+		this.targets.package.contents.dependencies['@types/node'] = '^14.6.4';
 
 		this.targets.webpack.contents.resolve.extensions.push('.ts');
 		this.targets.webpack.contents.entry = './src/index.ts';
 		this.targets.src.contents.index.name = 'index.ts';
+		this.targets.webpack.contents.module.rules.push({
+			"test": /\.ts$/,
+			"loader": "ts-loader",
+			"exclude": /node-modules/,
+		});
 		this.lang = 'ts';
 
 		this.targets.tsconfig = {
@@ -213,7 +226,7 @@ Sanilla.append('#root', app);`,
 	}
 
 	private async router() {
-		this.targets.package.contents.dependencies.push('@sanillajs/sanilla-router');
+		this.targets.package.contents.dependencies['@sanillajs/sanilla-router'] = '^1.0.2';
 		this.targets.webpack.contents.devServer.historyApiFallback = true;
 		this.targets.src.contents.index.contents += `\n\nimport './router';`
 		this.targets.src.contents.app.contents = `<ul>
