@@ -65,11 +65,12 @@ export default class {
 				},
 				dependencies: {
 					'@sanillajs/sanilla': '^1.0.3',
-					'@sanillajs/sanilla-cli': '^1.0.1',
+					'@sanillajs/sanilla-cli': '^1.0.2',
 					'html-loader': '^1.3.0',
 					'webpack': '^4.44.1',
 					'webpack-cli': '^3.3.12',
 					'webpack-dev-server': '^3.11.0',
+					'html-webpack-plugin': '^4.4.1',
 				},
 			},
 		},
