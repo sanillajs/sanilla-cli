@@ -35,6 +35,12 @@ export default class {
 	private webpack: any = {
 		rules: [],
 		devServer: {},
+		plugins: [
+			`raw:new (require('html-webpack-plugin'))({
+				title: 'Sanilla Application',
+				template: process.cwd() + '/public/index.ejs',
+			})`,
+		],
 		resolve: {
 			extensions: ['.json', '.js'],
 		},
@@ -74,6 +80,10 @@ export default class {
 		this.dependencies.push('@types/node');
 
 		this.webpack.resolve.extensions.push('.ts');
+	}
+
+	private async router() {
+		this.dependencies.push('@sanillajs/sanilla-router');
 	}
 
 	private async run() {

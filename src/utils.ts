@@ -35,10 +35,17 @@ export const fullStringify = (obj: any, deep: number = 0) => {
 				rtn += 'undefined';
 				break;
 			case 'string':
-				rtn += `"${obj.replace(/\\/g, '\\\\')
-								.replace(/\n/g, '\\n')
-								.replace(/\t/g, '\\t')
-								.replace(/\r/g, '\\r')}"`;
+				let quotes = '"';
+				if ( obj.match(/^raw:/) ) {
+					obj = obj.replace(/^raw:/, '');
+					quotes = '';
+				} else {
+					obj = obj.replace(/\\/g, '\\\\')
+					.replace(/\n/g, '\\n')
+					.replace(/\t/g, '\\t')
+					.replace(/\r/g, '\\r');
+				}
+				rtn += `${quotes}${obj}${quotes}`;
 				break;
 			default:
 				rtn += obj.toString();
